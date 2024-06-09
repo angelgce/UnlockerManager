@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Entered the build phase...
+      - mvn clean package
+  post_build:
+    commands:
+      - echo Build MAVEN completed successfully
+      - aws lambda update-function-code --function-name UnlockerManagerLambda --zip-file fileb://target/UnlockerManager-1.0.0-aws.jar
+      - echo Build LAMBDA completed successfully
+artifacts:
+  files:
+    - target/UnlockerManager-1.0.0-aws.jar
+  discard-paths: yes
